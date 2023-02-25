@@ -651,7 +651,7 @@ document.addEventListener("DOMContentLoaded", function () {
         
       } else {
         isListening = false;
-        speechRecognition.stop();
+        // speechRecognition.stop();
       }
     });
 
