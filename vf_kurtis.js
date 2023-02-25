@@ -637,11 +637,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       speechOutput.innerHTML = "";
-
-      setTimeout(() => {
-        speechRecognition.stop();
-        console.log("Stop Speech Recognigion");
-      }, 10000);
     };
 
     buttonMic.addEventListener("click", async function () {
