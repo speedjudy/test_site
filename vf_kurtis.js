@@ -110,35 +110,7 @@ const random = (min, max) => Math.floor(Math.random() * (max - min)) + min;
 const drawVisualizer = ({ bufferLength, dataArray, config }) => {
   const ctx = document.getElementById("canvas").getContext("2d");
   ctx.clearRect(0, 0, canvas.width, canvas.height); // clears the canvas
-  let max = Math.max(...dataArray.slice(0, bufferLength));
-  let min = Math.min(...dataArray.slice(0, bufferLength));
-  let threshold = min + (max - min) * 0.68;
-  let radius = config.radius;
-  const heightsArr = dataArray.map((el) => {
-    if (config.beatDetection) return normalize(el, threshold) * (radius / 80);
-    else return el * 0.4 * (radius / 80);
-  });
-  for (let j = 1; j <= heightsArr.length; j++) {
-    heightsArr[j] =
-      (heightsArr[(j - 1) % heightsArr.length] +
-        heightsArr[j % heightsArr.length] +
-        heightsArr[(j + 1) % heightsArr.length] +
-        heightsArr[(j + 2) % heightsArr.length]) /
-      4;
-  }
-  for (let i = 0; i < bufferLength; i++) {
-
-    drawLine(
-      {
-        i,
-        bufferLength,
-        heightsArr,
-        radius,
-        config,
-      },
-      ctx
-    );
-  }
+  
 };
 const drawLine = (opts, ctx) => {
   const { i, radius, bufferLength, heightsArr, config } = opts;
@@ -618,11 +590,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     speechRecognition.onstart = function () {
       console.log("Start Speech Recognigion");
+      overlay.style.display = "block";
+      overlay.click();
+      positionOverlay();
+
       if (!visualAnimationStarted) {
         animate();
         visualAnimationStarted = true;
       }
 
+      speechOutput.innerHTML = "";
     };
 
     buttonMic.addEventListener("click", async function () {
