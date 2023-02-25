@@ -768,62 +768,6 @@ var interim_transcript = "";
         		final_transcript = "apartment";	
         	}
         }
-
-        const response = await fetch(
-          "https://kz5l9o5qci.execute-api.us-east-1.amazonaws.com/" +
-            encodeURI(final_transcript) +
-            "/" +
-            encodeURI(locationValue)
-        );
-
-        const responseJson = await response.json();
-        console.log("response:", responseJson);
-        if (responseJson.status) {
-          console.log(responseJson.url);
-
-          const matchedWords = responseJson.matching_word;
-          let final_transcript_color = final_transcript;
-          matchedWords.map((el) => {
-            let key = Object.keys(el)[0];
-            if (final_transcript.toLowerCase().includes(key)) {
-              let color = "red";
-              if (el[key] === "location") {
-                color = "red";
-              } else if (
-                el[key] === "bathroom" ||
-                el[key] === "bedroom" ||
-                el[key] === "park"
-              ) {
-                color = "darkslateblue";
-              } else if (el[key] === "amenities") {
-                color = "blue";
-              } else if (el[key] === "filters") {
-                color = "violet";
-              } else if (el[key] === "category") {
-                color = "green";
-              } else if (el[key] === "floor") {
-                color = "skyblue";
-              } else if (el[key] === "type") {
-                color = "darkgreen";
-              } else if (el[key] === "available") {
-                color = "darkblue";
-              }
-
-              final_transcript_color = final_transcript_color.toLowerCase()
-                .replace(
-                  key,
-                  '<span style="color: ' + color + ';">' + key[0].toUpperCase() + key.slice(1) + "</span>"
-                );
-            }
-          });
-
-          console.log(final_transcript_color);
-
-         speechOutput.innerHTML = "";
-         speechOutput.innerHTML = final_transcript_color;
-
-          window.open(responseJson.url, "_self");
-        }
     	}
 
     speechRecognition.onend = () => {
