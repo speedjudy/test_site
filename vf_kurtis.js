@@ -618,16 +618,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     speechRecognition.onstart = function () {
       console.log("Start Speech Recognigion");
-      overlay.style.display = "block";
-      overlay.click();
-      positionOverlay();
-
       if (!visualAnimationStarted) {
-        // animate();
+        animate();
         visualAnimationStarted = true;
       }
 
-      speechOutput.innerHTML = "";
     };
 
     buttonMic.addEventListener("click", async function () {
